@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .login-box {
+            background: white;
+            border: 1px solid #dbdbdb;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .instagram-logo {
+            width: 175px;
+            height: 51px;
+            margin: 0 auto 20px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .form-group {
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 9px 8px;
+            background: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            font-size: 12px;
+            color: #262626;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #a8a8a8;
+        }
+
+        .form-group input::placeholder {
+            color: #8e8e8e;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 7px;
+            background: #0095f6;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        .login-btn:disabled {
+            background: #b2dffc;
+            cursor: not-allowed;
+        }
+
+        .divider {
+            margin: 15px 0;
+            position: relative;
+            color: #8e8e8e;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #dbdbdb;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+        }
+
+        .fb-login {
+            color: #385185;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: block;
+            margin: 15px 0;
+        }
+
+        .fb-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #385185;
+            border-radius: 2px;
+            position: relative;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .fb-icon::before {
+            content: 'f';
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .forgot-password {
+            color: #00376b;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 450px) {
+            .login-box {
+                background: transparent;
+                border: none;
+            }
+            
+            body {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Box -->
+        <div class="login-box">
+            <div class="logo">
+                <div class="instagram-logo"></div>
+            </div>
+            
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <input type="text" id="username" name="username" placeholder="Phone number, username, or email" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    Log in
+                </button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <div class="facebook-login">
+                <a href="#" class="fb-login">
+                    <span class="fb-icon"></span>
+                    Log in with Facebook
+                </a>
+            </div>
+            
+            <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            btn.textContent = 'Logging in...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Login functionality would be implemented here');
+                btn.textContent = 'Log in';
+                btn.disabled = false;
+            }, 1000);
+        });
+
+        document.querySelector('.fb-login').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Facebook login would be implemented here');
+        });
+
+        document.querySelector('.forgot-password').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Password reset would be implemented here');
+        });
+    </script>
+</body>
+</html>

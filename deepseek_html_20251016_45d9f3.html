@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Login Practice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 350px;
+        }
+
+        /* Login Box */
+        .login-box {
+            background: white;
+            border: 1px solid #dbdbdb;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .instagram-logo {
+            width: 175px;
+            height: 51px;
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 9px 8px;
+            background: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            font-size: 12px;
+            color: #262626;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #a8a8a8;
+        }
+
+        .form-group input::placeholder {
+            color: #8e8e8e;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 7px;
+            background: #0095f6;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            margin: 8px 0;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            background: #0081d6;
+        }
+
+        .login-btn:disabled {
+            background: #b2dffc;
+            cursor: not-allowed;
+        }
+
+        .btn-loader {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .divider {
+            margin: 15px 0;
+            position: relative;
+            color: #8e8e8e;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #dbdbdb;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+        }
+
+        .fb-login {
+            color: #385185;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: block;
+            margin: 15px 0;
+        }
+
+        .fb-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #385185;
+            border-radius: 2px;
+            position: relative;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .fb-icon::before {
+            content: 'f';
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .forgot-password {
+            color: #00376b;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        /* Sign Up Box */
+        .signup-box {
+            background: white;
+            border: 1px solid #dbdbdb;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .signup-box p {
+            font-size: 14px;
+            color: #262626;
+            margin: 0;
+        }
+
+        .signup-box a {
+            color: #0095f6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Get App Box */
+        .app-box {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .app-box p {
+            font-size: 14px;
+            color: #262626;
+            margin-bottom: 15px;
+        }
+
+        .app-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .app-btn {
+            height: 40px;
+            background: #000;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #8e8e8e;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .copyright {
+            color: #8e8e8e;
+            font-size: 12px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+        }
+
+        .error-message {
+            color: #ed4956;
+            font-size: 12px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 450px) {
+            .login-box, .signup-box {
+                background: transparent;
+                border: none;
+            }
+            
+            body {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Main Login Box -->
+        <div class="login-box">
+            <div class="logo">
+                <div class="instagram-logo">Instagram</div>
+            </div>
+            
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <input type="text" id="username" name="username" placeholder="Phone number, username, or email" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-text">Log in</span>
+                    <div class="btn-loader" id="btnLoader">
+                        <div class="spinner"></div>
+                    </div>
+                </button>
+                
+                <div class="error-message" id="errorMessage">
+                    This is a practice form. No data will be sent anywhere.
+                </div>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <div class="facebook-login">
+                <a href="#" class="fb-login">
+                    <span class="fb-icon"></span>
+                    Log in with Facebook
+                </a>
+            </div>
+            
+            <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+        
+        <!-- Sign Up Box -->
+        <div class="signup-box">
+            <p>Don't have an account? <a href="#" id="signupLink">Sign up</a></p>
+        </div>
+        
+        <!-- Get App Box -->
+        <div class="app-box">
+            <p>Get the app.</p>
+            <div class="app-buttons">
+                <a href="#" class="app-btn">App Store</a>
+                <a href="#" class="app-btn">Google Play</a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Blog</a>
+                <a href="#">Jobs</a>
+                <a href="#">Help</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+            <div class="copyright">
+                © 2024 Instagram Practice Page
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h3>Practice Form Submitted!</h3>
+            <p>This is a frontend practice project. No data was sent to any server.</p>
+            <button onclick="closeModal()" style="margin-top: 15px; padding: 8px 16px; background: #0095f6; color: white; border: none; border-radius: 5px; cursor: pointer;">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const btnLoader = document.getElementById('btnLoader');
+        const btnText = document.querySelector('.btn-text');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Simple validation function
+        function validateForm(username, password) {
+            if (username.length < 3) {
+                return "Username must be at least 3 characters";
+            }
+            if (password.length < 6) {
+                return "Password must be at least 6 characters";
+            }
+            return null;
+        }
+
+        // Show error message
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        // Hide error message
+        function hideError() {
+            errorMessage.style.display = 'none';
+        }
+
+        // Show modal
+        function showModal() {
+            document.getElementById('successModal').style.display = 'flex';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        // Form submission handler - SAFE VERSION
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            // Hide any previous errors
+            hideError();
+
+            // Basic validation
+            const validationError = validateForm(username, password);
+            if (validationError) {
+                showError(validationError);
+                return;
+            }
+
+            // Show loading state
+            btnLoader.style.display = 'block';
+            btnText.style.visibility = 'hidden';
+            loginBtn.disabled = true;
+
+            // Simulate API call delay
+            setTimeout(() => {
+                // Show success message
+                showModal();
+                
+                // Reset form and loading state
+                btnLoader.style.display = 'none';
+                btnText.style.visibility = 'visible';
+                loginBtn.disabled = false;
+                loginForm.reset();
+                
+                // Log to console (for learning purposes only)
+                console.log('Form submitted with:', { 
+                    username: username, 
+                    password: '*'.repeat(password.length) 
+                });
+                
+            }, 1500);
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                closeModal();
+            }
+        });
+
+        // Other button handlers
+        document.querySelector('.fb-login').addEventListener('click', (e) => {
+            e.preventDefault();
+            showModal();
+        });
+
+        document.querySelector('.forgot-password').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Password reset functionality would be implemented here in a real application');
+        });
+
+        document.getElementById('signupLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Sign up functionality would be implemented here in a real application');
+        });
+
+        // App store links
+        document.querySelectorAll('.app-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('This would redirect to app stores in a real application');
+            });
+        });
+
+        // Clear error when user starts typing
+        document.getElementById('username').addEventListener('input', hideError);
+        document.getElementById('password').addEventListener('input', hideError);
+    </script>
+</body>
+</html>
